@@ -1,0 +1,439 @@
+{
+  "Name": "WebFarm",
+  "Description": "Creates a IIS WebFarm with WebDeploy publishing enabled.",
+  "Id": "b9fd3b28-d02d-4368-a1cc-0c3ccc25eaf0",
+  "Parameters": [],
+  "Network": {
+    "DnsServers": [],
+    "LocalSites": [],
+    "VirtualSites": []
+  },
+  "AffinityGroup": {
+    "Name": "dsc-affinitygroup",
+    "Region": "East US",
+    "Label": "DSC created affinity group"
+  },
+  "StorageAccounts": [
+    {
+      "Name": "dscdiskstore1",
+      "AffinityGroup": "dsc-affinitygroup",
+      "Region": "East US",
+      "Description": "A non-georedundant disk store",
+      "Label": "dscdiskstore1",
+      "DisableGeoReplication": true
+    }
+  ],
+  "CloudServices": [
+    {
+      "Name": "dscwebfarm1",
+      "AffinityGroup": "dsc-affinitygroup",
+      "Region": "East US",
+      "Label": "dscwebfarm1",
+      "Description": "My cloud service",
+      "Deployment": {
+        "Name": "215fd163-9d93-4a20-ab65-e0940b71531e",
+        "Label": "215fd163-9d93-4a20-ab65-e0940b71531e",
+        "DeploymentId": "fa935feabdd3452a876479100a14c4bc",
+        "VirtualMachines": [
+          {
+            "Name": "web1",
+            "RoleSize": "Small",
+            "Subnets": [],
+            "AvailabilitySet": "webfarm-avset",
+            "OsVirtualDisk": {
+              "DiskName": "215fd163-9d93-4a20-ab65-e0940b71531e-web1-0-201402281758430328",
+              "MediaLink": "http://dscdiskstore1.blob.core.windows.net/vhds/215fd163-9d93-4a20-ab65-e0940b71531e-web1-os-201402281758378362.vhd",
+              "OsType": "Windows",
+              "OsImageName": "a699494373c04fc0bc8f2bb1389d6106__Windows-Server-2012-R2-201402.01-en.us-127GB.vhd"
+            },
+            "DataVirtualDisks": [],
+            "WindowsConfigSet": {
+              "ComputerName": "WEB1",
+              "LocalAdminCredentialId": "vmadmin",
+              "EnableAutomaticUpdates": false,
+              "ChangePasswordAtLogon": false,
+              "DisableRdp": false
+            },
+            "Endpoints": [
+              {
+                "Name": "HTTP",
+                "LocalPort": 80,
+                "Protocol": "tcp",
+                "Port": 80,
+                "EnableDirectServerReturn": false,
+                "VirtualIPAddress": "23.96.10.47",
+                "Rules": [],
+                "LoadBalancerProbe": {
+                  "Name": "http",
+                  "Port": 80,
+                  "Protocol": "Http",
+                  "Path": "/",
+                  "IntervalInSeconds": 15,
+                  "TimeoutInSeconds": 31
+                }
+              },
+              {
+                "Name": "HTTPS",
+                "LocalPort": 443,
+                "Protocol": "tcp",
+                "Port": 443,
+                "EnableDirectServerReturn": false,
+                "VirtualIPAddress": "23.96.10.47",
+                "Rules": [],
+                "LoadBalancerProbe": {
+                  "Name": "https",
+                  "Port": 443,
+                  "Protocol": "Tcp",
+                  "IntervalInSeconds": 15,
+                  "TimeoutInSeconds": 31
+                }
+              },
+              {
+                "Name": "PowerShell",
+                "LocalPort": 5986,
+                "Protocol": "tcp",
+                "Port": 46273,
+                "EnableDirectServerReturn": false,
+                "VirtualIPAddress": "23.96.10.47",
+                "Rules": []
+              },
+              {
+                "Name": "Remote Desktop",
+                "LocalPort": 3389,
+                "Protocol": "tcp",
+                "Port": 56528,
+                "EnableDirectServerReturn": false,
+                "VirtualIPAddress": "23.96.10.47",
+                "Rules": []
+              },
+              {
+                "Name": "WebDeploy",
+                "LocalPort": 8172,
+                "Protocol": "tcp",
+                "Port": 8172,
+                "EnableDirectServerReturn": false,
+                "VirtualIPAddress": "23.96.10.47",
+                "Rules": []
+              }
+            ],
+            "ConfigSets": [
+              "WebFarmServer",
+              "WebDeployPublishServer"
+            ]
+          },
+          {
+            "Name": "web2",
+            "RoleSize": "Small",
+            "Subnets": [],
+            "AvailabilitySet": "webfarm-avset",
+            "OsVirtualDisk": {
+              "DiskName": "215fd163-9d93-4a20-ab65-e0940b71531e-web2-0-201402281759180014",
+              "MediaLink": "http://dscdiskstore1.blob.core.windows.net/vhds/215fd163-9d93-4a20-ab65-e0940b71531e-web2-os-201402281758378482.vhd",
+              "OsType": "Windows",
+              "OsImageName": "a699494373c04fc0bc8f2bb1389d6106__Windows-Server-2012-R2-201402.01-en.us-127GB.vhd"
+            },
+            "DataVirtualDisks": [],
+            "WindowsConfigSet": {
+              "ComputerName": "WEB2",
+              "LocalAdminCredentialId": "vmadmin",
+              "EnableAutomaticUpdates": false,
+              "ChangePasswordAtLogon": false,
+              "DisableRdp": false
+            },
+            "Endpoints": [
+              {
+                "Name": "HTTP",
+                "LocalPort": 80,
+                "Protocol": "tcp",
+                "Port": 80,
+                "EnableDirectServerReturn": false,
+                "VirtualIPAddress": "23.96.10.47",
+                "Rules": [],
+                "LoadBalancerProbe": {
+                  "Name": "http",
+                  "Port": 80,
+                  "Protocol": "Http",
+                  "Path": "/",
+                  "IntervalInSeconds": 15,
+                  "TimeoutInSeconds": 31
+                }
+              },
+              {
+                "Name": "HTTPS",
+                "LocalPort": 443,
+                "Protocol": "tcp",
+                "Port": 443,
+                "EnableDirectServerReturn": false,
+                "VirtualIPAddress": "23.96.10.47",
+                "Rules": [],
+                "LoadBalancerProbe": {
+                  "Name": "https",
+                  "Port": 443,
+                  "Protocol": "Tcp",
+                  "IntervalInSeconds": 15,
+                  "TimeoutInSeconds": 31
+                }
+              },
+              {
+                "Name": "PowerShell",
+                "LocalPort": 5986,
+                "Protocol": "tcp",
+                "Port": 59758,
+                "EnableDirectServerReturn": false,
+                "VirtualIPAddress": "23.96.10.47",
+                "Rules": []
+              },
+              {
+                "Name": "Remote Desktop",
+                "LocalPort": 3389,
+                "Protocol": "tcp",
+                "Port": 54455,
+                "EnableDirectServerReturn": false,
+                "VirtualIPAddress": "23.96.10.47",
+                "Rules": []
+              }
+            ],
+            "ConfigSets": [
+              "WebFarmServer"
+            ]
+          }
+        ],
+        "DiskStorageAccount": "dscdiskstore1"
+      }
+    }
+  ],
+  "DeploymentGroups": [],
+  "Credentials": [
+    {
+      "Id": "vmadmin",
+      "UserName": "belcher",
+      "Password": "some@pass1"
+    }
+  ],
+  "Certificates": [
+    {
+      "Id": "SSL",
+      "FileName": "SSLCert.pfx",
+      "Password": "password"
+    }
+  ],
+  "ConfigSets": [
+    {
+      "Id": "WebFarmServer",
+      "Description": "Web farm server",
+      "Endpoints": [
+        {
+          "Name": "HTTP",
+          "LocalPort": 80,
+          "Protocol": "tcp",
+          "Port": 80,
+          "EnableDirectServerReturn": false,
+          "Rules": [],
+          "LoadBalancerProbe": {
+            "Name": "http",
+            "Protocol": "Http",
+            "Path": "/",
+            "IntervalInSeconds": 15,
+            "TimeoutInSeconds": 31
+          }
+        },
+        {
+          "Name": "HTTPS",
+          "LocalPort": 443,
+          "Protocol": "tcp",
+          "Port": 443,
+          "EnableDirectServerReturn": false,
+          "Rules": [],
+          "LoadBalancerProbe": {
+            "Name": "https",
+            "Protocol": "Tcp",
+            "IntervalInSeconds": 15,
+            "TimeoutInSeconds": 31
+          }
+        }
+      ],
+      "CertificateIds": [
+        "SSL"
+      ],
+      "ConfigurationIds": [
+        "InstallWebFarm"
+      ]
+    },
+    {
+      "Id": "WebDeployPublishServer",
+      "Description": "Web deploy publish server",
+      "Endpoints": [
+        {
+          "Name": "WebDeploy",
+          "LocalPort": 8172,
+          "Protocol": "tcp",
+          "Port": 8172,
+          "EnableDirectServerReturn": false,
+          "Rules": []
+        }
+      ],
+      "CertificateIds": [],
+      "ConfigurationIds": [
+        "SyncWebFarmContent"
+      ]
+    }
+  ],
+  "Configurations": [
+    {
+      "Name": "InstallWebFarm",
+      "Resources": [
+        {
+          "Type": "Package",
+          "Name": "InstallWebPI",
+          "Args": {
+            "Credential": "vmadmin",
+            "Name": "Microsoft Web Platform Installer 4.6",
+            "ProductId": "16C7D2AD-20CA-491E-80BC-8607A9AACED9",
+            "Path": "http://download.microsoft.com/download/7/0/4/704CEB4C-9F42-4962-A2B0-5C84B0682C7A/WebPlatformInstaller_amd64_en-US.msi",
+            "LogPath": "C:\\ProgramData\\Aditi\\Brewmaster\\WebPlatformInstaller_amd64_en-US.log",
+            "Ensure": "Present"
+          },
+          "Nodes": [],
+          "Requires": [],
+          "Description": null
+        },
+        {
+          "Type": "WindowsFeature",
+          "Name": "InstallASPNET45",
+          "Args": {
+            "Name": "NET-Framework-45-ASPNET",
+            "IncludeAllSubFeature": "true",
+            "LogPath": "C:\\ProgramData\\Aditi\\Brewmaster\\Install-ASPNET45.log",
+            "Ensure": "Present"
+          },
+          "Nodes": [],
+          "Requires": [],
+          "Description": null
+        },
+        {
+          "Type": "WindowsFeature",
+          "Name": "InstallIIS",
+          "Args": {
+            "Name": "Web-Server",
+            "IncludeAllSubFeature": "true",
+            "LogPath": "C:\\ProgramData\\Aditi\\Brewmaster\\Install-IIS.log",
+            "Ensure": "Present"
+          },
+          "Nodes": [],
+          "Requires": [],
+          "Description": null
+        },
+        {
+          "Type": "Registry",
+          "Name": "EnableRemoteManagement",
+          "Args": {
+            "Key": "HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\WebManagement\\Server",
+            "ValueName": "EnableRemoteManagement",
+            "ValueData": "1",
+            "ValueType": "Dword",
+            "Force": "true",
+            "Ensure": "Present"
+          },
+          "Nodes": [],
+          "Requires": [
+            "[WindowsFeature]InstallIIS"
+          ],
+          "Description": null
+        },
+        {
+          "Type": "Service",
+          "Name": "StartWebManagementService",
+          "Args": {
+            "Name": "wmsvc",
+            "StartupType": "Automatic",
+            "State": "Running"
+          },
+          "Nodes": [],
+          "Requires": [
+            "[Registry]EnableRemoteManagement"
+          ],
+          "Description": null
+        },
+        {
+          "Credential": "vmadmin",
+          "GetScript": "return @{ Installed = Test-Path -LiteralPath \"$env:ProgramFiles\\IIS\\Microsoft Web Deploy V3\\msdeploy.exe\" -PathType Leaf }\r\n",
+          "SetScript": "$webpicmdexe = \"$env:ProgramFiles\\Microsoft\\Web Platform Installer\\WebPICmd.exe\"\r\n$webpicmdargs = @(\"/Install\", \"/Products:WDeploy\", \"/AcceptEula\", \"/SuppressReboot\", \"/Log:C:\\ProgramData\\Aditi\\Brewmaster\\WebDeploy-Install.log\")\r\nWrite-Verbose \"Installing WebDeploy V3 ($webpicmdexe $webpicmdargs)\" -Verbose\r\nStart-Process -FilePath $webpicmdexe -ArgumentList $webpicmdargs -Wait\r\nif (!(Test-Path -LiteralPath \"$env:ProgramFiles\\IIS\\Microsoft Web Deploy V3\\msdeploy.exe\" -PathType Leaf))\r\n{\r\n    Throw \"$env:ProgramFiles\\IIS\\Microsoft Web Deploy V3\\msdeploy.exe was not installed.\"\r\n}\r\n",
+          "TestScript": "if (Test-Path -LiteralPath \"$env:ProgramFiles\\IIS\\Microsoft Web Deploy V3\\msdeploy.exe\" -PathType Leaf)\r\n{\r\n    Write-Verbose \"$env:ProgramFiles\\IIS\\Microsoft Web Deploy V3\\msdeploy.exe already exists.\" -Verbose\r\n    return $true\r\n}\r\nreturn $false\r\n",
+          "Type": "Script",
+          "Name": "InstallWebDeploy",
+          "Args": {},
+          "Nodes": [],
+          "Requires": [
+            "[Service]StartWebManagementService",
+            "[Package]InstallWebPI"
+          ],
+          "Description": null
+        },
+        {
+          "Credential": null,
+          "GetScript": "Get-NetFirewallRule -DisplayName $DisplayName -ErrorAction Ignore",
+          "SetScript": "New-NetFirewallRule -DisplayName $DisplayName -Action $Action -Description $Description -Direction $Direction -Enabled $Enabled -IcmpType $IcmpType -LocalPort $LocalPort -Protocol $Protocol",
+          "TestScript": "if (Get-NetFirewallRule -DisplayName $DisplayName -ErrorAction Ignore) { Write-Verbose \"Firewall rule '$DisplayName' exists.\"; $true}else{$false}",
+          "Type": "Script",
+          "Name": "OpenWebDeployPort",
+          "Args": {
+            "DisplayName": "WebDeploy",
+            "Action": "Allow",
+            "Description": "WebDeploy (TCP in)",
+            "Direction": "Inbound",
+            "Enabled": "True",
+            "IcmpType": "Any",
+            "LocalPort": "8172",
+            "Protocol": "TCP"
+          },
+          "Nodes": [],
+          "Requires": [
+            "[Script]InstallWebDeploy"
+          ],
+          "Description": null
+        }
+      ],
+      "Args": {}
+    },
+    {
+      "Name": "SyncWebFarmContent",
+      "Resources": [
+        {
+          "Type": "File",
+          "Name": "WebDeploySyncContentScript",
+          "Args": {
+            "DestinationPath": "C:\\ProgramData\\Aditi\\Brewmaster\\WebFarm\\WebDeploySyncContent.ps1",
+            "Type": "File",
+            "Ensure": "Present",
+            "Force": "True",
+            "Contents": "param(\r\n\t[string]$WebServers   # a space-separated list of server names\r\n\t)\r\n\r\nfunction Write-Log\r\n{\r\n    $logfile = 'C:\\ProgramData\\Aditi\\Brewmaster\\WebFarm\\WebDeploySyncContent.log'\r\n    try\r\n    {\r\n        if (!(Test-Path -LiteralPath $logfile)) { \r\n            New-Item -Path $logfile -ItemType File -Force | Out-Null\r\n        }\r\n\r\n        $msg = $Args -join ' '\r\n        $lineprefix = '{0:u}: ' -f (Get-Date)\r\n        $msg = $msg -replace '(?m)^', $lineprefix\r\n        $msg >> $logfile\r\n    }\r\n    catch\r\n    {\r\n        Write-Warning \"Write-Log failed: $_\"\r\n    }\r\n}\r\n\r\ntry\r\n{\r\n    $syncpath = 'C:\\Inetpub\\wwwroot'\r\n    Write-Log ''\r\n    Write-Log Synchronizing $syncpath\r\n    $publishingServer = $env:computername\r\n    foreach ($server in ((-split $WebServers) -ne $publishingServer))\r\n    { \r\n        $exe = \"$env:ProgramFiles\\IIS\\Microsoft Web Deploy V3\\msdeploy.exe\"\r\n        $arguments = @(\"-verb:sync\", \"-source:contentPath=$syncpath,computerName=$publishingServer\", \"-dest:contentPath=$syncpath,computerName=$server\")\r\n        Write-Log Launching $exe \"$arguments\"\r\n        & $exe $arguments 2>&1 | % { \r\n            if ($_ -is [System.Management.Automation.ErrorRecord]) { \r\n                Write-Log ($_ | Format-List -Force | out-string)\r\n            }\r\n            else {\r\n                Write-Log $_\r\n            }\r\n        }\r\n    }\r\n    Write-Log Synchronization complete.\r\n}\r\ncatch\r\n{\r\n    Write-Log Synchronization failed:\r\n    Write-Log ($_ | Format-List * -Force | Out-String).Trim()\r\n    throw\r\n}\r\n"
+          },
+          "Nodes": [],
+          "Requires": [],
+          "Description": null
+        },
+        {
+          "Credential": "vmadmin",
+          "GetScript": "Get-ScheduledTask -TaskName $TaskName -ErrorAction Ignore | Export-ScheduledTask",
+          "SetScript": "$ErrorActionPreference = 'Stop'\r\n$Action = New-ScheduledTaskAction -Execute $Execute -Argument $Argument\r\n$Trigger = New-ScheduledTaskTrigger -Once -At ([DateTime]::UtcNow) -RepetitionInterval ([TimeSpan]::FromMinutes(2)) -RepetitionDuration ([TimeSpan]::MaxValue)\r\n$Settings = New-ScheduledTaskSettingsSet -MultipleInstances IgnoreNew\r\n$Task = New-ScheduledTask -Action $Action -Trigger $Trigger -Settings $Settings\r\n$Task | Register-ScheduledTask -TaskName $TaskName -User $User -Password $Password -Force\r\nWrite-Verbose 'Created scheduled task.'\r\n",
+          "TestScript": "$task = Get-ScheduledTask -TaskName $TaskName -ErrorAction Ignore\r\nif ($task -eq $null) { Write-Verbose \"Task '$TaskName' not found.\"; return $false} \r\nif ($task.State -eq 'Disabled') { Write-Verbose \"Task '$TaskName' is disabled.\"; return $false} \r\nif ($task.Actions -eq $null) { Write-Verbose \"Task '$TaskName' has no action.\"; return $false} \r\nif ($task.Actions.Execute -ne $Execute -OR $task.Actions.Argument -ne $Argument) { Write-Verbose \"Task '$TaskName' has different action.\"; return $false} \r\nif ($task.Triggers -eq $null -OR $task.Triggers.Enabled -contains $false) { Write-Verbose \"Task '$TaskName' has no trigger.\"; return $false} \r\nif ($task.Principal.UserId -ne ([Security.Principal.WindowsIdentity]::GetCurrent().Name)) { Write-Verbose \"Task '$TaskName' is running as different user.\"; return $false} \r\nWrite-Verbose \"Task '$TaskName' exists.\"\r\nreturn $true\r\n",
+          "Type": "Script",
+          "Name": "SyncContentTask",
+          "Args": {
+            "TaskName": "Aditi_Brewmaster_WebFarm_ContentSync",
+            "Execute": "powershell.exe",
+            "Argument": "-NoLogo -NonInteractive -WindowStyle Hidden -ExecutionPolicy RemoteSigned -File C:\\ProgramData\\Aditi\\Brewmaster\\WebFarm\\WebDeploySyncContent.ps1 -WebServers \"Web1 Web2\"",
+            "User": "belcher",
+            "Password": "some@pass1"
+          },
+          "Nodes": [],
+          "Requires": [
+            "[File]WebDeploySyncContentScript"
+          ],
+          "Description": null
+        }
+      ],
+      "Args": {}
+    }
+  ]
+}
