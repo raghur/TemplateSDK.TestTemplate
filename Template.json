@@ -1,7 +1,7 @@
 {
   "Name": "WebFarm",
   "Description": "Creates a IIS WebFarm with WebDeploy publishing enabled.",
-  "Id": "b9fd3b28-d02d-4368-a1cc-0c3ccc25eaf0",
+  "Id": "9598c6c9-b008-44e6-8d64-aa2d0c1d2342",
   "Parameters": [],
   "Network": {
     "DnsServers": [],
@@ -19,7 +19,6 @@
       "AffinityGroup": "dsc-affinitygroup",
       "Region": "East US",
       "Description": "A non-georedundant disk store",
-      "Label": "dscdiskstore1",
       "DisableGeoReplication": true
     }
   ],
@@ -28,25 +27,18 @@
       "Name": "dscwebfarm1",
       "AffinityGroup": "dsc-affinitygroup",
       "Region": "East US",
-      "Label": "dscwebfarm1",
       "Description": "My cloud service",
       "Deployment": {
         "Name": "215fd163-9d93-4a20-ab65-e0940b71531e",
-        "Label": "215fd163-9d93-4a20-ab65-e0940b71531e",
-        "DeploymentId": "fa935feabdd3452a876479100a14c4bc",
         "VirtualMachines": [
           {
             "Name": "web1",
             "RoleSize": "Small",
-            "Subnets": [],
             "AvailabilitySet": "webfarm-avset",
             "OsVirtualDisk": {
-              "DiskName": "215fd163-9d93-4a20-ab65-e0940b71531e-web1-0-201402281758430328",
-              "MediaLink": "http://dscdiskstore1.blob.core.windows.net/vhds/215fd163-9d93-4a20-ab65-e0940b71531e-web1-os-201402281758378362.vhd",
               "OsType": "Windows",
-              "OsImageName": "a699494373c04fc0bc8f2bb1389d6106__Windows-Server-2012-R2-201402.01-en.us-127GB.vhd"
+              "OsImageName": "a699494373c04fc0bc8f2bb1389d6106__Windows-Server-2012-R2-*"
             },
-            "DataVirtualDisks": [],
             "WindowsConfigSet": {
               "ComputerName": "WEB1",
               "LocalAdminCredentialId": "vmadmin",
@@ -54,68 +46,6 @@
               "ChangePasswordAtLogon": false,
               "DisableRdp": false
             },
-            "Endpoints": [
-              {
-                "Name": "HTTP",
-                "LocalPort": 80,
-                "Protocol": "tcp",
-                "Port": 80,
-                "EnableDirectServerReturn": false,
-                "VirtualIPAddress": "23.96.10.47",
-                "Rules": [],
-                "LoadBalancerProbe": {
-                  "Name": "http",
-                  "Port": 80,
-                  "Protocol": "Http",
-                  "Path": "/",
-                  "IntervalInSeconds": 15,
-                  "TimeoutInSeconds": 31
-                }
-              },
-              {
-                "Name": "HTTPS",
-                "LocalPort": 443,
-                "Protocol": "tcp",
-                "Port": 443,
-                "EnableDirectServerReturn": false,
-                "VirtualIPAddress": "23.96.10.47",
-                "Rules": [],
-                "LoadBalancerProbe": {
-                  "Name": "https",
-                  "Port": 443,
-                  "Protocol": "Tcp",
-                  "IntervalInSeconds": 15,
-                  "TimeoutInSeconds": 31
-                }
-              },
-              {
-                "Name": "PowerShell",
-                "LocalPort": 5986,
-                "Protocol": "tcp",
-                "Port": 46273,
-                "EnableDirectServerReturn": false,
-                "VirtualIPAddress": "23.96.10.47",
-                "Rules": []
-              },
-              {
-                "Name": "Remote Desktop",
-                "LocalPort": 3389,
-                "Protocol": "tcp",
-                "Port": 56528,
-                "EnableDirectServerReturn": false,
-                "VirtualIPAddress": "23.96.10.47",
-                "Rules": []
-              },
-              {
-                "Name": "WebDeploy",
-                "LocalPort": 8172,
-                "Protocol": "tcp",
-                "Port": 8172,
-                "EnableDirectServerReturn": false,
-                "VirtualIPAddress": "23.96.10.47",
-                "Rules": []
-              }
-            ],
             "ConfigSets": [
               "WebFarmServer",
               "WebDeployPublishServer"
@@ -124,15 +54,11 @@
           {
             "Name": "web2",
             "RoleSize": "Small",
-            "Subnets": [],
             "AvailabilitySet": "webfarm-avset",
             "OsVirtualDisk": {
-              "DiskName": "215fd163-9d93-4a20-ab65-e0940b71531e-web2-0-201402281759180014",
-              "MediaLink": "http://dscdiskstore1.blob.core.windows.net/vhds/215fd163-9d93-4a20-ab65-e0940b71531e-web2-os-201402281758378482.vhd",
               "OsType": "Windows",
-              "OsImageName": "a699494373c04fc0bc8f2bb1389d6106__Windows-Server-2012-R2-201402.01-en.us-127GB.vhd"
+              "OsImageName": "a699494373c04fc0bc8f2bb1389d6106__Windows-Server-2012-R2-*"
             },
-            "DataVirtualDisks": [],
             "WindowsConfigSet": {
               "ComputerName": "WEB2",
               "LocalAdminCredentialId": "vmadmin",
@@ -140,59 +66,6 @@
               "ChangePasswordAtLogon": false,
               "DisableRdp": false
             },
-            "Endpoints": [
-              {
-                "Name": "HTTP",
-                "LocalPort": 80,
-                "Protocol": "tcp",
-                "Port": 80,
-                "EnableDirectServerReturn": false,
-                "VirtualIPAddress": "23.96.10.47",
-                "Rules": [],
-                "LoadBalancerProbe": {
-                  "Name": "http",
-                  "Port": 80,
-                  "Protocol": "Http",
-                  "Path": "/",
-                  "IntervalInSeconds": 15,
-                  "TimeoutInSeconds": 31
-                }
-              },
-              {
-                "Name": "HTTPS",
-                "LocalPort": 443,
-                "Protocol": "tcp",
-                "Port": 443,
-                "EnableDirectServerReturn": false,
-                "VirtualIPAddress": "23.96.10.47",
-                "Rules": [],
-                "LoadBalancerProbe": {
-                  "Name": "https",
-                  "Port": 443,
-                  "Protocol": "Tcp",
-                  "IntervalInSeconds": 15,
-                  "TimeoutInSeconds": 31
-                }
-              },
-              {
-                "Name": "PowerShell",
-                "LocalPort": 5986,
-                "Protocol": "tcp",
-                "Port": 59758,
-                "EnableDirectServerReturn": false,
-                "VirtualIPAddress": "23.96.10.47",
-                "Rules": []
-              },
-              {
-                "Name": "Remote Desktop",
-                "LocalPort": 3389,
-                "Protocol": "tcp",
-                "Port": 54455,
-                "EnableDirectServerReturn": false,
-                "VirtualIPAddress": "23.96.10.47",
-                "Rules": []
-              }
-            ],
             "ConfigSets": [
               "WebFarmServer"
             ]
@@ -437,3 +310,4 @@
     }
   ]
 }
+
