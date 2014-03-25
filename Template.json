@@ -65,6 +65,14 @@
       "Default": "web",
       "AllowedRegex": "^[a-zA-Z][a-zA-Z0-9-]{1,13}$",
       "AllowedDescription": "Must contain 3 to 14 letters, numbers, and hyphens. Must start with a letter."
+    },
+    {
+      "Name": "NumberOfWebServers",
+      "Type": "Number",
+      "Description": "Number of web servers.",
+      "Default": "2",
+      "Minimum": 2.0,
+      "Maximum": 100.0
     }
   ],
   "Network": {
@@ -73,31 +81,31 @@
     "VirtualSites": []
   },
   "AffinityGroup": {
-    "Name": "@@AffinityGroup",
-    "Region": "@@Region",
+    "Name": "{{AffinityGroup}}",
+    "Region": "{{Region}}",
     "Label": "DSC created affinity group"
   },
   "StorageAccounts": [
     {
-      "Name": "@@DiskStore",
-      "AffinityGroup": "@@AffinityGroup",
-      "Region": "@@Region",
+      "Name": "{{DiskStore}}",
+      "AffinityGroup": "{{AffinityGroup}}",
+      "Region": "{{Region}}",
       "Description": "A georedundant disk store",
       "DisableGeoReplication": false
     }
   ],
   "CloudServices": [
     {
-      "Name": "@@CloudService",
-      "AffinityGroup": "@@AffinityGroup",
-      "Region": "@@Region",
+      "Name": "{{CloudService}}",
+      "AffinityGroup": "{{AffinityGroup}}",
+      "Region": "{{Region}}",
       "Description": "My WebFarm cloud service",
       "Deployment": {
-        "Name": "@@CloudDeploymentId",
+        "Name": "{{CloudDeploymentId}}",
         "VirtualMachines": [
           {
-            "Name": "@@ServerNamePrefix@@1",
-            "RoleSize": "@@VMSize",
+            "Name": "{{ServerNamePrefix}}1",
+            "RoleSize": "{{VMSize}}",
             "AvailabilitySet": "webfarm-avset",
             "OsVirtualDisk": {
               "OsType": "Windows",
@@ -113,10 +121,11 @@
               "WebFarmServer",
               "WebDeployPublishServer"
             ]
-          },
-          {
-            "Name": "@@ServerNamePrefix@@2",
-            "RoleSize": "@@VMSize",
+          }
+{% for i in (2..NumberOfWebServers) -%}
+          ,{
+            "Name": "{{ServerNamePrefix}}{{i}}",
+            "RoleSize": "{{VMSize}}",
             "AvailabilitySet": "webfarm-avset",
             "OsVirtualDisk": {
               "OsType": "Windows",
@@ -132,8 +141,9 @@
               "WebFarmServer"
             ]
           }
+{% endfor -%}
         ],
-        "DiskStorageAccount": "@@DiskStore"
+        "DiskStorageAccount": "{{DiskStore}}"
       }
     }
   ],
@@ -141,8 +151,8 @@
   "Credentials": [
     {
       "Name": "vmadmin",
-      "UserName": "@@AdminName",
-      "Password": "@@AdminPassword"
+      "UserName": "{{AdminName}}",
+      "Password": "{{AdminPassword}}"
     }
   ],
   "ConfigSets": [
@@ -342,7 +352,7 @@
             "Type": "File",
             "Ensure": "Present",
             "Force": "True",
-            "Contents": "& 'C:\\ProgramData\\Aditi\\Brewmaster\\Template\\Files\\Powershell\\WebDeploySyncContent.ps1' -WebServers \"@@ServerNamePrefix@@1 @@ServerNamePrefix@@2\"",
+            "Contents": "& 'C:\\ProgramData\\Aditi\\Brewmaster\\Template\\Files\\Powershell\\WebDeploySyncContent.ps1' -WebServers \"{{ServerNamePrefix}}1{% for i in (2..NumberOfWebServers) %} {{ServerNamePrefix}}{{i}}{% endfor %}\"",
             "Checksum": "SHA-1"
           },
           "Nodes": [],
