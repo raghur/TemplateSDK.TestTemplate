@@ -69,8 +69,11 @@
     {
       "Name": "NumberOfWebServers",
       "Type": "Number",
+      "TypeHint": "integer",
       "Description": "Number of web servers.",
       "Default": "2",
+      "AllowedRegex": "^\\d+$",
+      "AllowedDescription": "Must enter a positive integer between 2 and 100.",
       "Minimum": 2.0,
       "Maximum": 100.0
     }
