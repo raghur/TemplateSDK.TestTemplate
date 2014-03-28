@@ -2,7 +2,6 @@
   "Name": "Aditi.WebFarm2",
   "Description": "Creates a two (2) server IIS WebFarm with WebDeploy publishing enabled.",
   "Version": "0.2.0",
-  "Guid": "3a1da14b-7191-4ae6-98be-00ff163fd1d4",
   "Parameters": [
     {
       "Name": "Region",
@@ -229,7 +228,7 @@
             "Name": "Microsoft Web Platform Installer 4.6",
             "ProductId": "16C7D2AD-20CA-491E-80BC-8607A9AACED9",
             "Path": "http://download.microsoft.com/download/7/0/4/704CEB4C-9F42-4962-A2B0-5C84B0682C7A/WebPlatformInstaller_amd64_en-US.msi",
-            "LogPath": "C:\\ProgramData\\Aditi\\Brewmaster\\temp\\WebPlatformInstaller_amd64_en-US.log",
+            "LogPath": "$env:BrewmasterDir\\Logs\\WebPlatformInstaller_amd64_en-US.log",
             "Ensure": "Present"
           },
           "Nodes": [],
@@ -244,7 +243,7 @@
           "Args": {
             "Name": "NET-Framework-45-ASPNET",
             "IncludeAllSubFeature": "true",
-            "LogPath": "C:\\ProgramData\\Aditi\\Brewmaster\\temp\\Install-ASPNET45.log",
+            "LogPath": "$env:BrewmasterDir\\Logs\\Install-ASPNET45.log",
             "Ensure": "Present"
           },
           "Nodes": [],
@@ -259,7 +258,7 @@
           "Args": {
             "Name": "Web-Server",
             "IncludeAllSubFeature": "true",
-            "LogPath": "C:\\ProgramData\\Aditi\\Brewmaster\\temp\\Install-IIS.log",
+            "LogPath": "$env:BrewmasterDir\\Logs\\Install-IIS.log",
             "Ensure": "Present"
           },
           "Nodes": [],
@@ -305,7 +304,7 @@
         {
           "Credential": "vmadmin",
           "GetScript": "return @{ Installed = Test-Path -LiteralPath \"$env:ProgramFiles\\IIS\\Microsoft Web Deploy V3\\msdeploy.exe\" -PathType Leaf }\r\n",
-          "SetScript": "$webpicmdexe = \"$env:ProgramFiles\\Microsoft\\Web Platform Installer\\WebPICmd.exe\"\r\n$webpicmdargs = @(\"/Install\", \"/Products:WDeployPS\", \"/AcceptEula\", \"/SuppressReboot\", \"/Log:C:\\ProgramData\\Aditi\\Brewmaster\\temp\\WebDeploy-Install.log\")\r\nWrite-Verbose \"Installing WebDeploy V3 ($webpicmdexe $webpicmdargs)\" -Verbose\r\nStart-Process -FilePath $webpicmdexe -ArgumentList $webpicmdargs -Wait\r\nif (!(Test-Path -LiteralPath \"$env:ProgramFiles\\IIS\\Microsoft Web Deploy V3\\msdeploy.exe\" -PathType Leaf))\r\n{\r\n    Throw \"$env:ProgramFiles\\IIS\\Microsoft Web Deploy V3\\msdeploy.exe was not installed.\"\r\n}\r\n",
+          "SetScript": "$webpicmdexe = \"$env:ProgramFiles\\Microsoft\\Web Platform Installer\\WebPICmd.exe\"\r\n$webpicmdargs = @(\"/Install\", \"/Products:WDeployPS\", \"/AcceptEula\", \"/SuppressReboot\", \"/Log:$env:BrewmasterDir\\Logs\\WebDeploy-Install.log\")\r\nWrite-Verbose \"Installing WebDeploy V3 ($webpicmdexe $webpicmdargs)\" -Verbose\r\nStart-Process -FilePath $webpicmdexe -ArgumentList $webpicmdargs -Wait\r\nif (!(Test-Path -LiteralPath \"$env:ProgramFiles\\IIS\\Microsoft Web Deploy V3\\msdeploy.exe\" -PathType Leaf))\r\n{\r\n    Throw \"$env:ProgramFiles\\IIS\\Microsoft Web Deploy V3\\msdeploy.exe was not installed.\"\r\n}\r\n",
           "TestScript": "if (Test-Path -LiteralPath \"$env:ProgramFiles\\IIS\\Microsoft Web Deploy V3\\msdeploy.exe\" -PathType Leaf)\r\n{\r\n    Write-Verbose \"$env:ProgramFiles\\IIS\\Microsoft Web Deploy V3\\msdeploy.exe already exists.\" -Verbose\r\n    return $true\r\n}\r\nreturn $false\r\n",
           "Type": "Script",
           "ImportModule": null,
@@ -351,11 +350,11 @@
           "ImportTypeName": null,
           "Name": "CreateSyncContentScript",
           "Args": {
-            "DestinationPath": "C:\\ProgramData\\Aditi\\Brewmaster\\SyncContentNow.ps1",
+            "DestinationPath": "$env:BrewmasterDir\\SyncContentNow.ps1",
             "Type": "File",
             "Ensure": "Present",
             "Force": "True",
-            "Contents": "& 'C:\\ProgramData\\Aditi\\Brewmaster\\Template\\Files\\Powershell\\WebDeploySyncContent.ps1' -WebServers \"{{ServerNamePrefix}}1{% for i in (2..NumberOfWebServers) %} {{ServerNamePrefix}}{{i}}{% endfor %}\"",
+            "Contents": "& \"$env:BrewmasterTemplateDir\\Files\\Powershell\\WebDeploySyncContent.ps1\" -WebServers \"{{ServerNamePrefix}}1{% for i in (2..NumberOfWebServers) %} {{ServerNamePrefix}}{{i}}{% endfor %}\"",
             "Checksum": "SHA-1"
           },
           "Nodes": [],
@@ -369,7 +368,7 @@
           "Name": "CreateSyncContentTask",
           "Args": {
             "Name": "Aditi_Brewmaster_WebFarm_ContentSync",
-            "FilePath": "C:\\ProgramData\\Aditi\\Brewmaster\\SyncContentNow.ps1",
+            "FilePath": "$env:BrewmasterDir\\SyncContentNow.ps1",
             "Ensure": "Present",
             "At": "%%\"$(Get-Date)\"",
             "Once": "true",
