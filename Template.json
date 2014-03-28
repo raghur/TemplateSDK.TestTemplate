@@ -228,7 +228,7 @@
             "Name": "Microsoft Web Platform Installer 4.6",
             "ProductId": "16C7D2AD-20CA-491E-80BC-8607A9AACED9",
             "Path": "http://download.microsoft.com/download/7/0/4/704CEB4C-9F42-4962-A2B0-5C84B0682C7A/WebPlatformInstaller_amd64_en-US.msi",
-            "LogPath": "$env:BrewmasterDir\\Logs\\WebPlatformInstaller_amd64_en-US.log",
+            "LogPath": "%BrewmasterDir%\\Logs\\WebPlatformInstaller_amd64_en-US.log",
             "Ensure": "Present"
           },
           "Nodes": [],
@@ -243,7 +243,7 @@
           "Args": {
             "Name": "NET-Framework-45-ASPNET",
             "IncludeAllSubFeature": "true",
-            "LogPath": "$env:BrewmasterDir\\Logs\\Install-ASPNET45.log",
+            "LogPath": "%BrewmasterDir%\\Logs\\Install-ASPNET45.log",
             "Ensure": "Present"
           },
           "Nodes": [],
@@ -258,7 +258,7 @@
           "Args": {
             "Name": "Web-Server",
             "IncludeAllSubFeature": "true",
-            "LogPath": "$env:BrewmasterDir\\Logs\\Install-IIS.log",
+            "LogPath": "%BrewmasterDir%\\Logs\\Install-IIS.log",
             "Ensure": "Present"
           },
           "Nodes": [],
@@ -350,11 +350,11 @@
           "ImportTypeName": null,
           "Name": "CreateSyncContentScript",
           "Args": {
-            "DestinationPath": "$env:BrewmasterDir\\SyncContentNow.ps1",
+            "DestinationPath": "%BrewmasterDir%\\SyncContentNow.ps1",
             "Type": "File",
             "Ensure": "Present",
             "Force": "True",
-            "Contents": "& \"$env:BrewmasterTemplateDir\\Files\\Powershell\\WebDeploySyncContent.ps1\" -WebServers \"{{ServerNamePrefix}}1{% for i in (2..NumberOfWebServers) %} {{ServerNamePrefix}}{{i}}{% endfor %}\"",
+            "Contents": "& \"%BrewmasterTemplateDir%\\Files\\Powershell\\WebDeploySyncContent.ps1\" -WebServers \"{{ServerNamePrefix}}1{% for i in (2..NumberOfWebServers) %} {{ServerNamePrefix}}{{i}}{% endfor %}\"",
             "Checksum": "SHA-1"
           },
           "Nodes": [],
@@ -368,7 +368,7 @@
           "Name": "CreateSyncContentTask",
           "Args": {
             "Name": "Aditi_Brewmaster_WebFarm_ContentSync",
-            "FilePath": "$env:BrewmasterDir\\SyncContentNow.ps1",
+            "FilePath": "%BrewmasterDir%\\SyncContentNow.ps1",
             "Ensure": "Present",
             "At": "%%\"$(Get-Date)\"",
             "Once": "true",
