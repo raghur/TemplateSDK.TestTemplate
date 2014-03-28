@@ -365,7 +365,6 @@ function Test-TargetResource
 function Test-JobCredential
 {
     param (
-        [Microsoft.PowerShell.ScheduledJob.ScheduledJobDefinition]
         $Job,
         [pscredential]
         $Credential
@@ -441,7 +440,6 @@ function Compare-SecureString
 function Test-JobTriggerAtTime
 {
     param (
-        [Microsoft.PowerShell.ScheduledJob.ScheduledJobTrigger]
         $Trigger,
         [string]
         $At
@@ -459,7 +457,6 @@ function Test-WeeklyJobTrigger
 {
     param 
     (
-        [Microsoft.PowerShell.ScheduledJob.ScheduledJobTrigger]
         $Trigger,
         [string[]]
         $DaysOfWeek,
@@ -490,7 +487,6 @@ function Test-WeeklyJobTrigger
 function Test-DailyJobTrigger
 {
     param (
-        [Microsoft.PowerShell.ScheduledJob.ScheduledJobTrigger]
         $Trigger,
         [int]
         $DaysInterval,
@@ -514,7 +510,6 @@ function Test-DailyJobTrigger
 function Test-OnceJobTrigger
 {
     param (
-        [Microsoft.PowerShell.ScheduledJob.ScheduledJobTrigger]
         $Trigger,
         [int]
         $Hours,
