@@ -62,7 +62,7 @@ function Get-TargetResource
     if ($Credential)
     {
         #$icmArgs.Session = new-pssession -computername $env:COMPUTERNAME -Credential $Credential -Authentication CredSSP
-        $icmArgs.ComputerName = $env:COMPUTERNAME
+        #$icmArgs.ComputerName = $env:COMPUTERNAME
         $icmArgs.Credential = $Credential
     }
     $Job = Invoke-Command @icmArgs { Get-ScheduledJob -Name $using:Name -ErrorAction SilentlyContinue }
@@ -182,7 +182,7 @@ function Set-TargetResource
     if ($Credential)
     {
         #$icmArgs.Session = new-pssession -computername $env:COMPUTERNAME -Credential $Credential -Authentication CredSSP
-        $icmArgs.ComputerName = $env:COMPUTERNAME
+        #$icmArgs.ComputerName = $env:COMPUTERNAME
         $icmArgs.Credential = $Credential
     }
     
@@ -319,7 +319,7 @@ function Test-TargetResource
     if ($Credential)
     {
         #$icmArgs.Session = new-pssession -computername $env:COMPUTERNAME -Credential $Credential -Authentication CredSSP
-        $icmArgs.ComputerName = $env:COMPUTERNAME
+        #$icmArgs.ComputerName = $env:COMPUTERNAME
         $icmArgs.Credential = $Credential
     }
     $Job = Invoke-Command @icmArgs { Get-ScheduledJob -Name $using:Name -ErrorAction SilentlyContinue }
