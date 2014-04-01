@@ -235,6 +235,13 @@ function Set-TargetResource
             {
                 $JobParameters["Credential"] = $using:credential
             }
+
+            $Job = Get-ScheduledJob -Name $using:Name -ErrorAction SilentlyContinue
+            if ($Job)
+            {
+                $job | Unregister-ScheduledJob -Force -Confirm:$False
+            }
+
             Register-ScheduledJob @JobParameters
         }
     }
