@@ -1,7 +1,7 @@
 {
   "Name": "Aditi.TestTemplate",
   "Description": "Does not deploy anything - just gets a Cloudservice in place",
-  "Version": "0.1.0",
+  "Version": "0.2.0",
   "Parameters": [
     {
       "Name": "Region",
@@ -20,12 +20,6 @@
       "Type": "String",
       "TypeHint": "AzureCloudServiceName",
       "Description": "Name of the Azure Cloud Service."
-    },
-    {
-      "Name": "CloudDeploymentName",
-      "Type": "String",
-      "TypeHint": "string",
-      "Description": "Deployment name of Azure cloud deployment."
     }
   ],
   "Network": {
@@ -39,15 +33,7 @@
     "Label": "DSC created affinity group"
   },
   "StorageAccounts": [ ],
-  "CloudServices": [
-    {
-      "Name": "{{CloudService}}",
-      "AffinityGroup": "{{AffinityGroup}}",
-      "Region": "{{Region}}",
-      "Description": "Test template deployment",
-      "Deployment": { }
-    }
-  ],
+  "CloudServices": [ ],
   "DeploymentGroups": [],
   "Credentials": [ ],
   "ConfigSets": [ ],
