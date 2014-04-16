@@ -1,6 +1,6 @@
 {
   "Name": "Aditi.TestTemplate",
-  "Description": "Does not deploy anything - just gets a Cloudservice in place",
+  "Description": "Does not deploy anything - just gets a Cloudservice in place.. plus Darth Vader joins the party!",
   "Version": "0.2.0",
   "Parameters": [
     {
